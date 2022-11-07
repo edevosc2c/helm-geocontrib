@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "geocontrib.fullname" . }}-frontend-depl
+  labels:
+    {{- include "geocontrib.labels" . | nindent 4 }}-frontend-depl
+    app.neogeo.fr: geocontrib
+spec:
+  selector:
+    matchLabels:
+      {{- include "geocontrib.selectorLabels" . | nindent 6 }}-frontend-depl
+  template:
+    metadata:
+      labels:
+        {{- include "geocontrib.selectorLabels" . | nindent 8 }}-frontend-depl
+    spec:
+      containers:
+        - name: geocontrib
+          image: neogeo/geocontrib-front:{{ .Chart.AppVersion }}
+          imagePullPolicy: Always
+          command:
+          - /bin/bash
+          - -c
+          - sed -i 's#server geocontrib:5000#server {{ include "geocontrib.fullname" . }}-frontend-svc:5000#' default.conf ;
+            nginx -g daemon off
