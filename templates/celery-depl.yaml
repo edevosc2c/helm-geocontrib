@@ -19,6 +19,8 @@ spec:
           image: neogeo/geocontrib:{{ .Chart.AppVersion }}
           imagePullPolicy: Always
           command:
+          - src/docker/geocontrib/docker-entrypoint.sh
+          args:
           - src/docker/geocontrib/start_celery.sh
           {{- with .Values.env_variables }}
           env:
