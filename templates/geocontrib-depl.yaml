@@ -28,8 +28,10 @@ spec:
               port: 5000
           {{- with .Values.env_variables }}
           env:
-            {{- toYaml . | nindent 8 }}
+            {{- toYaml . | nindent 10 }}
           {{- end }}
+          - name: REDIS_HOST
+            value: {{ include "geocontrib.fullname" . }}-redis-svc
           volumeMounts:
           - name: geocontrib-config
             mountPath: /home/apprunner/geocontrib_app/config_front

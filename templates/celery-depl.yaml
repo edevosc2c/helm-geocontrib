@@ -24,6 +24,7 @@ spec:
           env:
             {{- toYaml . | nindent 8 }}
           {{- end }}
+
           volumeMounts:
           - name: geocontrib-config
             mountPath: /home/apprunner/geocontrib_app/config_front

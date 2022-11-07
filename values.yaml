@@ -134,9 +134,6 @@ env_variables:
       value: '0'
     - name: PROTECTED_USER_NAMES
       value: admin
-    # TODO: this one should be calculated by the helm chart, not hardcoded
-    - name: REDIS_HOST
-      value: geocontrib-redis.geocontrib
     - name: SECRET_KEY
       value: z123456789012345678901234567890123456789012345678a
     - name: SSO_MIDDLEWARE

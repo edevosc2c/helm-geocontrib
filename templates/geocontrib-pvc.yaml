@@ -7,15 +7,15 @@ metadata:
 spec:
   accessModes:
   - ReadWriteOnce
-  {{- if .Values.geocontrib.volumes.storage_class_name }}
-  storageClassName: {{ .Values.geocontrib.volumes.storage_class_name }}
+  {{- if .Values.volumes.storage_class_name }}
+  storageClassName: {{ .Values.volumes.storage_class_name }}
   {{- end }}
-  {{- if .Values.geocontrib.volumes.media.pv_name }}
-  volumeName: {{ .Values.geocontrib.volumes.media.pv_name}}
+  {{- if .Values.volumes.media.pv_name }}
+  volumeName: {{ .Values.volumes.media.pv_name}}
   {{- end }}
   resources:
     requests:
-      storage: {{ .Values.geocontrib.volumes.media.size }}
+      storage: {{ .Values.volumes.media.size }}
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -26,12 +26,12 @@ metadata:
 spec:
   accessModes:
   - ReadWriteOnce
-  {{- if .Values.geocontrib.volumes.storage_class_name }}
-  storageClassName: {{ .Values.geocontrib.volumes.storage_class_name }}
+  {{- if .Values.volumes.storage_class_name }}
+  storageClassName: {{ .Values.volumes.storage_class_name }}
   {{- end }}
-  {{- if .Values.geocontrib.volumes.static.pv_name }}
-  volumeName: {{ .Values.geocontrib.volumes.static.pv_name}}
+  {{- if .Values.volumes.static.pv_name }}
+  volumeName: {{ .Values.volumes.static.pv_name}}
   {{- end }}
   resources:
     requests:
-      storage: {{ .Values.geocontrib.volumes.static.size }}
+      storage: {{ .Values.volumes.static.size }}
