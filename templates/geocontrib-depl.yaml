@@ -19,12 +19,10 @@ spec:
           image: neogeo/geocontrib:2.3.9
           imagePullPolicy: Always
           livenessProbe:
-            httpGet:
-              path: /
+            tcpSocket:
               port: 5000
           readinessProbe:
-            httpGet:
-              path: /
+            tcpSocket:
               port: 5000
           {{- with .Values.env_variables }}
           env:
