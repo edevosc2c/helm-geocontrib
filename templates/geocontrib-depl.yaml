@@ -33,19 +33,25 @@ spec:
             - name: REDIS_HOST
               value: {{ include "geocontrib.fullname" . }}-redis-svc
           volumeMounts:
-          - name: geocontrib-config
-            mountPath: /home/apprunner/geocontrib_app/config_front
-          - name: geocontrib-media
-            mountPath: /home/apprunner/geocontrib_app/media
-          - name: geocontrib-static
-            mountPath: /home/apprunner/geocontrib_app/static
+            - name: geocontrib-config
+              mountPath: /home/apprunner/geocontrib_app/config_front
+            - name: geocontrib-media
+              mountPath: /home/apprunner/geocontrib_app/media
+            - name: geocontrib-static
+              mountPath: /home/apprunner/geocontrib_app/static
+          command:
+            - /bin/bash
+          args:
+            - -c
+            - sed -i 's#5432#${DB_PORT}#' src/docker/geocontrib/docker-entrypoint.d/01_install ;
+              src/docker/geocontrib/docker-entrypoint.sh gunicorn -w 3 -b 0.0.0.0:5000 config.wsgi:application ;
       volumes:
-      - name: geocontrib-config
-        configMap:
-          name: {{ include "geocontrib.fullname" . }}-config-front-cm
-      - name: geocontrib-media
-        persistentVolumeClaim:
-          claimName: {{ include "geocontrib.fullname" . }}-geocontrib-media-pvc
-      - name: geocontrib-static
-        persistentVolumeClaim:
-          claimName: {{ include "geocontrib.fullname" . }}-geocontrib-static-pvc
+        - name: geocontrib-config
+          configMap:
+            name: {{ include "geocontrib.fullname" . }}-config-front-cm
+        - name: geocontrib-media
+          persistentVolumeClaim:
+            claimName: {{ include "geocontrib.fullname" . }}-geocontrib-media-pvc
+        - name: geocontrib-static
+          persistentVolumeClaim:
+            claimName: {{ include "geocontrib.fullname" . }}-geocontrib-static-pvc
